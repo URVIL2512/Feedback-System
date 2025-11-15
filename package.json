@@ -4,6 +4,7 @@
   "description": "Feedback Management Dashboard - Full Stack Application",
   "scripts": {
     "build": "cd frontend && npm install && npm run build",
+    "vercel-build": "cd frontend && npm install && npm run build",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd server && npm run server",
     "client": "cd frontend && npm run dev"
