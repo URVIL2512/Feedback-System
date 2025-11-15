@@ -135,6 +135,9 @@ The frontend will run on `http://localhost:3000`
 - Axios
 - Lucide React Icons
 
+  ## Promt
+  https://drive.google.com/file/d/1jKXeccg2rSxYwViFfCUivQ2G8ZrOJZdA/view?usp=sharing
+
 ## Drive link for the demo video 
 https://drive.google.com/file/d/1f1T1N9EPtp3jyIoCRnkovGhGxctJwF93/view?usp=sharing
 
