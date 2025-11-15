@@ -132,8 +132,7 @@ The frontend will run on `http://localhost:3000`
 - Vite
 - React Router
 - Tailwind CSS
-- Axios
-- Lucide React Icons
+
 
   ## Promt
   https://drive.google.com/file/d/1jKXeccg2rSxYwViFfCUivQ2G8ZrOJZdA/view?usp=sharing
