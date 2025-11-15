@@ -1,6 +1,7 @@
-import { Star } from 'lucide-react';
+import { Star, Trash2 } from 'lucide-react';
+import api from '../api/axios';
 
-export default function FeedbackTable({ feedbacks }) {
+export default function FeedbackTable({ feedbacks, onDelete }) {
   const getRatingBadge = (rating) => {
     if (rating >= 4) {
       return 'bg-green-100 text-green-800 border-green-300';
@@ -21,6 +22,22 @@ export default function FeedbackTable({ feedbacks }) {
     });
   };
 
+  const handleDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this feedback?')) {
+      return;
+    }
+
+    try {
+      await api.delete(`/feedback/${id}`);
+      if (onDelete) {
+        onDelete();
+      }
+    } catch (error) {
+      console.error('Failed to delete feedback:', error);
+      alert('Failed to delete feedback. Please try again.');
+    }
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Recent Feedbacks</h2>
@@ -33,12 +50,13 @@ export default function FeedbackTable({ feedbacks }) {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rating</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {feedbacks.length === 0 ? (
               <tr>
-                <td colSpan="5" className="px-6 py-4 text-center text-gray-500">
+                <td colSpan="6" className="px-6 py-4 text-center text-gray-500">
                   No feedbacks yet. Be the first to share!
                 </td>
               </tr>
@@ -62,6 +80,16 @@ export default function FeedbackTable({ feedbacks }) {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {formatDate(feedback.createdAt)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <button
+                      onClick={() => handleDelete(feedback._id)}
+                      className="flex items-center gap-1 px-3 py-1.5 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
+                      title="Delete feedback"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))

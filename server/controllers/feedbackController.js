@@ -40,7 +40,7 @@ export const createFeedback = async (req, res) => {
 export const getFeedbacks = async (req, res) => {
   try {
     const { rating } = req.query;
-    
+
     let query = {};
     if (rating) {
       const ratingNum = Number(rating);
@@ -55,6 +55,33 @@ export const getFeedbacks = async (req, res) => {
     res.json({ feedbacks });
   } catch (error) {
     res.status(500).json({ error: error.message || 'Failed to fetch feedbacks' });
+  }
+};
+
+export const deleteFeedback = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: 'Feedback ID is required' });
+    }
+
+    const feedback = await Feedback.findById(id);
+
+    if (!feedback) {
+      return res.status(404).json({ error: 'Feedback not found' });
+    }
+
+    // Optional: Check if user owns the feedback (if userId is stored)
+    // if (feedback.userId && feedback.userId.toString() !== req.userId) {
+    //   return res.status(403).json({ error: 'Not authorized to delete this feedback' });
+    // }
+
+    await Feedback.findByIdAndDelete(id);
+
+    res.json({ message: 'Feedback deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message || 'Failed to delete feedback' });
   }
 };
 

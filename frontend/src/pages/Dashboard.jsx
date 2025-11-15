@@ -200,7 +200,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          <FeedbackTable feedbacks={feedbacks} />
+          <FeedbackTable feedbacks={feedbacks} onDelete={handleFeedbackSubmit} />
         </div>
       </div>
     </div>
